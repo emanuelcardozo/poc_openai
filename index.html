@@ -14,19 +14,34 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
 <body>
-  <section class="col-md-6">
+  <div id="alert" class="row alert alert-dismissible fade" role="alert">
+    <strong class="alert-title"></strong>
+    <p></p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <section class="col-6">
     <h1>POC - Open AI</h1>
     <div class="form-group">
       <textarea class="form-control" id="chat" rows="10" readonly="true"></textarea>
     </div>
     <form onsubmit="return sendPrompt(event)" class="row">
-      <div class="col-md-10">
+      <div class="col-10">
         <input name="prompt" class="form-control" placeholder="Escribe una pregunta" />
       </div>
-      <div class="col-md-2">
+      <div class="col-2">
         <button type="submit" class="btn btn-success">Enviar</button>
       </div>
     </form>
+    <div class="row">
+      <div class="col-12">
+        <button onclick="uploadDocument()" class="btn btn-primary">Upload</button>
+        <button onclick="train()" class="btn btn-info">Entrenar</button>
+        <button onclick="reset()" class="btn btn-warning">Reset</button>
+        <button onclick="cleanTextArea()" class="btn btn-secondary">Clear</button>
+      </div>
+    </div>
   </section>
 </body>
 </html>
