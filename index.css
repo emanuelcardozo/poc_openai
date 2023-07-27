@@ -1,0 +1,7 @@
+textarea {
+  resize: none;
+}
+
+textarea.form-control:disabled, textarea.form-control[readonly] {
+  background-color: white;
+}
