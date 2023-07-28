@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Open AI Client</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
   <link rel="stylesheet" href="./index.css">
   
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   <script src="./index.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
 <body>
   <div id="alert" class="row alert alert-dismissible fade" role="alert">
@@ -21,25 +20,32 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <section class="col-6">
+  <section class="col-xs-9 col-sm-6">
     <h1>POC - Open AI</h1>
     <div class="form-group">
       <textarea class="form-control" id="chat" rows="10" readonly="true"></textarea>
+      <form onsubmit="return sendPrompt(event)">
+        <div class="input-group my-2">
+          <input type="text" class="form-control" name="prompt" placeholder="Escribe una pregunta" />
+          <button type="submit" class="btn btn-outline-success">
+            <i class="bi bi-send-fill"></i>
+          </button>
+          <button type="button" class="btn btn-outline-secondary" onclick="cleanTextArea()">
+            <i class="bi bi-trash-fill"></i>
+          </button>
+        </div>
+      </form>
     </div>
-    <form onsubmit="return sendPrompt(event)" class="row">
-      <div class="col-10">
-        <input name="prompt" class="form-control" placeholder="Escribe una pregunta" />
-      </div>
-      <div class="col-2">
-        <button type="submit" class="btn btn-success">Enviar</button>
-      </div>
-    </form>
-    <div class="row">
-      <div class="col-12">
-        <button onclick="uploadDocument()" class="btn btn-primary">Upload</button>
-        <button onclick="train()" class="btn btn-info">Entrenar</button>
-        <button onclick="reset()" class="btn btn-warning">Reset</button>
-        <button onclick="cleanTextArea()" class="btn btn-secondary">Clear</button>
+    <h2>Entrenar</h2>
+    <div class="form-group">
+      <textarea class="form-control" id="chat" rows="5" readonly="true"></textarea>
+      <div class="row">
+        <div class="col-12">
+          <button onclick="uploadDocument()" class="btn btn-primary">Upload</button>
+          <button onclick="train()" class="btn btn-info">Entrenar</button>
+          <button onclick="reset()" class="btn btn-warning">Reset</button>
+          <button onclick="cleanTextArea()" class="btn btn-secondary">Clear</button>
+        </div>
       </div>
     </div>
   </section>
