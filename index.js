@@ -132,7 +132,7 @@ function sendPrompt(e) {
   if(!prompt) return
 
   const textArea = document.getElementById('chat')
-  textArea.append("User: " + prompt + "\n")
+  textArea.append(">> User:\n" + prompt + "\n")
   
   promptInput.value = ''
   promptInput.disabled = true
@@ -140,8 +140,7 @@ function sendPrompt(e) {
   sendPromptToAPI(prompt)
     .then(res => res.json())
     .then(({ data }) => {
-      textArea.append("IA: " + data + "\n")
-      textArea.append(" ------------------------------------------- \n")      
+      textArea.append("<< IA:" + data + "\n")
     })
     .catch(showErrorAlert)
     .finally(() => {

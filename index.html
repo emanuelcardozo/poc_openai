@@ -14,17 +14,24 @@
 </head>
 <body>
   <header>
-    <h1>POC - Open AI</h1>    
+    <nav class="navbar bg-primary border-bottom border-body" data-bs-theme="dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          POC - OpenAI
+        </a>
+      </div>
+    </nav>
   </header>
-  <div id="alert" class="row alert alert-dismissible fade" role="alert">
+  <!-- <div id="alert" class="row alert alert-dismissible fade" role="alert">
     <strong class="alert-title"></strong>
     <p></p>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
-  <div class="row mx-3">
-    <section class="col-md-8">
+  </div> -->
+  <div class="row m-3">
+    <h2>Chat</h2>
+    <section class="col-md-8 mb-3">
       <div class="form-group">
         <textarea class="form-control with_shadow" id="chat" rows="10" readonly="true"></textarea>
         <form onsubmit="return sendPrompt(event)">
