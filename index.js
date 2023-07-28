@@ -1,23 +1,39 @@
-const API_URL = 'http://localhost:5001'
+const API_URL = 'http://192.168.0.16:5001'
 const DEFAULT_DELAY = 5_000
 
-function uploadDocument() {
+function uploadDocument(e) {
+  e.preventDefault()
+
+  const trainTextElement = event.target.elements.new_knowledgment
+  const trainText = trainTextElement.value
+
+  if(!trainText) return
+
+  trainTextElement.disabled = true
+  trainTextElement.value = ''
+
   return fetch(API_URL + '/documents', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ text: TRAIN_TEXT })
+    body: JSON.stringify({ text: trainText })
   })
   .then(res => res.json())
-  .then(() => {
+  .then(() => {   
+    const pendingsDocsElement = document.getElementById("pending_docs")
+    pendingsDocsElement.value = Number(pendingsDocsElement.value) + 1 
+
     showAlert({ 
       type: 'alert-primary',
       title: 'IA',
       message: 'Archivo subido.'
     })
   })
-  .catch(showErrorAlert)
+  .catch(console.error)
+  .finally(() => {
+    trainTextElement.disabled = false
+  })
 }
 
 function train() {
@@ -26,13 +42,19 @@ function train() {
   })
   .then(res => res.json())
   .then(() => {
+    const pendingsDocsElement = document.getElementById("pending_docs")
+    const learnedDocsElement = document.getElementById("learned_docs")
+
+    learnedDocsElement.value = Number(learnedDocsElement.value) + Number(pendingsDocsElement.value)
+    pendingsDocsElement.value = 0
+
     showAlert({ 
       type: 'alert-info',
       title: 'IA', 
       message: 'Aprendizaje terminado.'
     })
   })
-  .catch(showErrorAlert)
+  .catch(console.error)
 }
 
 function reset() {
@@ -41,6 +63,9 @@ function reset() {
   })
   .then(res => res.json())
   .then(() => {
+    const learnedDocsElement = document.getElementById("learned_docs")
+    learnedDocsElement.value = 0
+    
     showAlert({ 
       type: 'alert-warning',
       title: 'IA', 
@@ -116,9 +141,11 @@ function sendPrompt(e) {
     .then(res => res.json())
     .then(({ data }) => {
       textArea.append("IA: " + data + "\n")
-      textArea.append(" ------------------------------------------- \n")
+      textArea.append(" ------------------------------------------- \n")      
+    })
+    .catch(showErrorAlert)
+    .finally(() => {
       promptInput.disabled = false
       promptInput.focus()
     })
-    .catch(showErrorAlert)
 }

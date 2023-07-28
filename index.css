@@ -1,5 +1,5 @@
-section {
-  margin: auto;
+body {
+  background-color: rgba(251, 251, 251, 0.864);
 }
 
 textarea {
@@ -8,4 +8,8 @@ textarea {
 
 textarea.form-control:disabled, textarea.form-control[readonly] {
   background-color: white;
+}
+
+.with_shadow {
+  box-shadow: 5px 5px 5px lightgray
 }

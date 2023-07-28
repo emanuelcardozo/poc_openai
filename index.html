@@ -23,48 +23,71 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <section class="col-xs-9 col-sm-6">
-    <div class="form-group">
-      <textarea class="form-control" id="chat" rows="10" readonly="true"></textarea>
-      <form onsubmit="return sendPrompt(event)">
-        <div class="input-group my-2">
-          <input type="text" class="form-control" name="prompt" placeholder="Escribe una pregunta" />
-          <button type="submit" class="btn btn-outline-success">
-            <i class="bi bi-send-fill"></i>
-          </button>
-          <button type="button" class="btn btn-outline-secondary" onclick="cleanTextArea()">
-            <i class="bi bi-trash-fill"></i>
-          </button>
-        </div>
-      </form>
-    </div>
-    <div class="accordion" id="accordionExample">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            <i class="bi bi-book-fill"></i>
-            <span class="mx-3">Entrenar</span>
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <div class="form-group">
-              <textarea class="form-control" id="chat" rows="5"></textarea>
-              <div class="row">
-                <div class="col-12">
-                  <button onclick="uploadDocument()" class="btn btn-primary">
+  <div class="row mx-3">
+    <section class="col-md-8">
+      <div class="form-group">
+        <textarea class="form-control with_shadow" id="chat" rows="10" readonly="true"></textarea>
+        <form onsubmit="return sendPrompt(event)">
+          <div class="input-group my-2 with_shadow">
+            <input type="text" class="form-control" name="prompt" placeholder="Escribe una pregunta" />
+            <button type="submit" class="btn btn-outline-success">
+              <i class="bi bi-send-fill"></i>
+            </button>
+            <button type="button" class="btn btn-outline-secondary" onclick="cleanTextArea()">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <section class="col-md-4">
+      <div class="accordion with_shadow" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <i class="bi bi-sliders"></i>
+              <span class="mx-3">Ajustes de Conocimiento</span>
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <form onsubmit="return uploadDocument(event)">
+                <div class="form-group">
+                  <label for="new_knowledgment" class="form-label">Escribe un documento para aprender:</label>
+                  <textarea class="form-control" name="new_knowledgment" rows="5"></textarea>
+                  <button type="submit" class="btn btn-primary my-2">
                     <i class="bi bi-cloud-upload-fill"></i>
+                    <span class="mx-2">Subir</span>
                   </button>
-                  <button onclick="train()" class="btn btn-info">Entrenar</button>
-                  <button onclick="reset()" class="btn btn-warning">Reset</button>
-                  <button onclick="cleanTextArea()" class="btn btn-secondary">Clear</button>
                 </div>
-              </div>
+              </form>
+                <div class="row">
+                  <div class="col-12">
+                    <label class="form-label">Documentos a aprender:</label>
+                    <div class="input-group my-2">
+                      <input id="pending_docs" type="number" class="form-control" value="0" name="pending_docs" readonly/>
+                      <button onclick="train()" class="btn btn-success">
+                        <i class="bi bi-node-plus-fill"></i>
+                        <span class="mx-2">Entrenar</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Documentos a olvidar:</label>
+                    <div class="input-group my-2">
+                      <input id="learned_docs" type="number" class="form-control" value="0" name="learned_docs" readonly/>
+                      <button onclick="reset()" class="btn btn-danger">
+                        <i class="bi bi-node-minus-fill"></i>
+                        <span class="mx-2">Olvidar</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>    
-  </section>
+      </div>    
+    </section>
+  </div>
 </body>
 </html>
