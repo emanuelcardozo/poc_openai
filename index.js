@@ -128,6 +128,7 @@ function sendPrompt(e) {
 
   const textArea = document.getElementById('chat')
   textArea.append(">> User:\n" + prompt + "\n")
+  textArea.scrollTop = textArea.scrollHeight
   
   promptInput.value = ''
   promptInput.disabled = true
@@ -136,6 +137,7 @@ function sendPrompt(e) {
     .then(res => res.json())
     .then(({ data }) => {
       textArea.append("<< IA:" + data + "\n")
+      textArea.scrollTop = textArea.scrollHeight
     })
     .catch(showErrorAlert)
     .finally(() => {
