@@ -87,7 +87,7 @@ function sendPromptToAPI(prompt) {
 
 function showErrorAlert() {
   showAlert({ 
-    type: 'alert-danger', 
+    type: 'error', 
     title: 'Error', 
     message: 'Por favor, intenta de nuevo mas tarde.'
   })
@@ -96,31 +96,26 @@ function showErrorAlert() {
 let timeoutId
 
 function showAlert({ type, title, message }) {
-  const alert = document.getElementById('alert')
-  const titleElement = alert.children[0]
-  const messageElement = alert.children[1]
-
-  alert.classList.remove('show', type)
-  clearTimeout(timeoutId)
-
-  alert.classList.add('show', type)
+  const toastElement = document.getElementById('liveToast')
+  const titleElement = toastElement.getElementsByClassName("me-auto")[0]
   titleElement.innerText = title
-  messageElement.innerText = message
 
-  timeoutId = setTimeout(function() {
-    alert.classList.remove('show', type)
-  }, DEFAULT_DELAY)
+  const bodyElement = toastElement.getElementsByClassName("toast-body")[0]
+  bodyElement.innerText = message
+
+  if(type === 'error') {
+    toastElement.classList.add("text-white", "bg-danger")
+  } else {
+    toastElement.classList.remove("text-white", "bg-danger")
+  }
+
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastElement)
+  toastBootstrap.show()
 }
 
 function cleanTextArea() {
   const textArea = document.getElementById('chat')
   textArea.innerHTML = ''
-  
-  showAlert({ 
-    type: 'alert-secondary', 
-    title: 'Clear', 
-    message: 'Historial eliminado.'
-  })
 }
 
 function sendPrompt(e) {
