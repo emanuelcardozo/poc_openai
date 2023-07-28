@@ -9,7 +9,3 @@ textarea {
 textarea.form-control:disabled, textarea.form-control[readonly] {
   background-color: white;
 }
-
-.alert-title {
-  margin-right: .5rem;
-}

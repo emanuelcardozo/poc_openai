@@ -13,6 +13,9 @@
   <script src="./index.js"></script>
 </head>
 <body>
+  <header>
+    <h1>POC - Open AI</h1>    
+  </header>
   <div id="alert" class="row alert alert-dismissible fade" role="alert">
     <strong class="alert-title"></strong>
     <p></p>
@@ -21,7 +24,6 @@
     </button>
   </div>
   <section class="col-xs-9 col-sm-6">
-    <h1>POC - Open AI</h1>
     <div class="form-group">
       <textarea class="form-control" id="chat" rows="10" readonly="true"></textarea>
       <form onsubmit="return sendPrompt(event)">
@@ -36,18 +38,33 @@
         </div>
       </form>
     </div>
-    <h2>Entrenar</h2>
-    <div class="form-group">
-      <textarea class="form-control" id="chat" rows="5" readonly="true"></textarea>
-      <div class="row">
-        <div class="col-12">
-          <button onclick="uploadDocument()" class="btn btn-primary">Upload</button>
-          <button onclick="train()" class="btn btn-info">Entrenar</button>
-          <button onclick="reset()" class="btn btn-warning">Reset</button>
-          <button onclick="cleanTextArea()" class="btn btn-secondary">Clear</button>
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <i class="bi bi-book-fill"></i>
+            <span class="mx-3">Entrenar</span>
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="form-group">
+              <textarea class="form-control" id="chat" rows="5"></textarea>
+              <div class="row">
+                <div class="col-12">
+                  <button onclick="uploadDocument()" class="btn btn-primary">
+                    <i class="bi bi-cloud-upload-fill"></i>
+                  </button>
+                  <button onclick="train()" class="btn btn-info">Entrenar</button>
+                  <button onclick="reset()" class="btn btn-warning">Reset</button>
+                  <button onclick="cleanTextArea()" class="btn btn-secondary">Clear</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </div>    
   </section>
 </body>
 </html>
