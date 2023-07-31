@@ -53,9 +53,9 @@ function uploadDocument(e) {
     cleanMetadatFields()
 
     showAlert({ 
-      type: 'alert-primary',
-      title: 'IA',
-      message: 'Archivo subido.'
+      type: 'success',
+      title: 'Envío exitoso',
+      message: 'El documento se encuentra disponible para aprender.'
     })
   })
   .catch(console.error)
@@ -77,9 +77,9 @@ function train() {
     pendingsDocsElement.value = 0
 
     showAlert({ 
-      type: 'alert-info',
-      title: 'IA', 
-      message: 'Aprendizaje terminado.'
+      type: 'success',
+      title: 'Entrenamiento exitoso', 
+      message: 'Puedes consultar sobre los documentos aprendidos.'
     })
   })
   .catch(console.error)
@@ -95,9 +95,9 @@ function reset() {
     learnedDocsElement.value = 0
     
     showAlert({ 
-      type: 'alert-warning',
-      title: 'IA', 
-      message: 'Aprendizaje eliminado.'
+      type: 'success',
+      title: 'Aprendizaje eliminado', 
+      message: 'Todo el conocimiento adquirido ya no está disponible.'
     })
   })
   .catch(showErrorAlert)
@@ -120,8 +120,6 @@ function showErrorAlert() {
     message: 'Por favor, intenta de nuevo mas tarde.'
   })
 }
-
-let timeoutId
 
 function showAlert({ type, title, message }) {
   const toastElement = document.getElementById('liveToast')
@@ -192,18 +190,12 @@ function addEmptyRow() {
   const metadataContainerElement = document.getElementById("metadata_container")
 
   metadataContainerElement.insertAdjacentHTML('beforeend', `
-  <div class="row my-1">
-    <div class="col-5">
-      <input class="form-control" placeholder="Nombre" name="metadata_keys[]" onkeyup="return onMetadataChange(event)" />
-    </div>
-    <div class="col-5">
-      <input class="form-control" placeholder="Valor" name="metadata_values[]" onkeyup="return onMetadataChange(event)" />
-    </div>
-    <div class="col-2">
-      <button role="button" class="btn btn-primary" onclick="return onClickAdd(event)" disabled>
-        <i class="bi bi-plus"></i>
-      </button>
-    </div>
+  <div class="input-group my-2">
+    <input class="form-control" placeholder="Nombre" name="metadata_keys[]" onkeyup="return onMetadataChange(event)" />
+    <input class="form-control" placeholder="Valor" name="metadata_values[]" onkeyup="return onMetadataChange(event)" />
+    <button class="btn btn-primary" onclick="return onClickAdd(event)" disabled>
+      <i class="bi bi-plus"></i>
+    </button>
   </div>
   `)
 }
@@ -217,7 +209,7 @@ function onClickAdd(event) {
 }
 
 function onMetadataChange(event) {
-  const rowElement = event.target.parentElement.parentElement
+  const rowElement = event.target.parentElement
   const buttonEl = rowElement.getElementsByTagName('button')[0]
   const [nameInputEl, valueInputEl] = rowElement.getElementsByTagName('input')
 

@@ -22,68 +22,65 @@
       </div>
     </nav>
   </header>
-  <div class="row m-3">
-    <h2>Chat</h2>
-    <section class="col-md-8 mb-3">
-      <div class="form-group">
-        <textarea class="form-control with_shadow" id="chat" rows="10" readonly="true"></textarea>
-        <form onsubmit="return sendPrompt(event)">
-          <div class="input-group my-2 with_shadow">
-            <input type="text" class="form-control" name="prompt" placeholder="Escribe una pregunta" />
-            <button type="submit" class="btn btn-outline-success">
-              <i class="bi bi-send-fill"></i>
-            </button>
-            <button type="button" class="btn btn-outline-secondary" onclick="cleanTextArea()">
-              <i class="bi bi-trash-fill"></i>
-            </button>
-          </div>
-        </form>
-      </div>
-    </section>
-    <section class="col-md-4">
-      <div class="accordion with_shadow" id="accordionExample">
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              <i class="bi bi-sliders"></i>
-              <span class="mx-3">Ajustes de Conocimiento</span>
-            </button>
-          </h2>
-          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <form onsubmit="return uploadDocument(event)">
-                <div class="form-group">
-                  <label for="new_knowledgment" class="form-label">Escribe un documento para aprender:</label>
-                  <textarea class="form-control" name="new_knowledgment" rows="5"></textarea>
-                  
-                  <div class="row">
-                    <label class="form-label">Metadata:</label>
-                    <div id="metadata_container">
-                      <div class="row my-1">
-                        <div class="col-5">
-                          <input class="form-control" placeholder="Nombre" name="metadata_keys[]" onkeyup="return onMetadataChange(event)" />
-                        </div>
-                        <div class="col-5">
-                          <input class="form-control" placeholder="Valor" name="metadata_values[]" onkeyup="return onMetadataChange(event)" />
-                        </div>
-                        <div class="col-2">
-                          <button class="btn btn-primary" onclick="return onClickAdd(event)" disabled>
-                            <i class="bi bi-plus"></i>
-                          </button>
-                        </div>
+  <main class="container">
+    <div class="row my-3">
+      <h2>Chat</h2>
+      <section class="col-lg-8 mb-3">
+        <div class="form-group">
+          <textarea class="form-control with_shadow" id="chat" rows="10" readonly="true"></textarea>
+          <form onsubmit="return sendPrompt(event)">
+            <div class="input-group my-2 with_shadow">
+              <input type="text" class="form-control" name="prompt" placeholder="Escribe una pregunta" />
+              <button type="submit" class="btn btn-outline-success">
+                <i class="bi bi-send-fill"></i>
+              </button>
+              <button type="button" class="btn btn-outline-secondary" onclick="cleanTextArea()">
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section class="col-lg-4">
+        <div class="accordion with_shadow" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <i class="bi bi-sliders"></i>
+                <span class="mx-3">Ajustes de Conocimiento</span>
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="row mb-4">
+                  <form onsubmit="return uploadDocument(event)">
+                    <div class="form-group">
+                      <label for="new_knowledgment" class="form-label">Escribe un documento para aprender:</label>
+                      <textarea class="form-control" name="new_knowledgment" rows="5"></textarea>
+                      
+                      <div class="row my-2">
+                        <label class="form-label">Metadata (opcional):</label>
+                        <div id="metadata_container">
+                          <div class="input-group my-2">
+                            <input class="form-control" placeholder="Nombre" name="metadata_keys[]" onkeyup="return onMetadataChange(event)" />
+                            <input class="form-control" placeholder="Valor" name="metadata_values[]" onkeyup="return onMetadataChange(event)" />
+                            <button class="btn btn-primary" onclick="return onClickAdd(event)" disabled>
+                              <i class="bi bi-plus"></i>
+                            </button>
+                          </div>
+                        </div>                    
                       </div>
-                    </div>                    
-                  </div>
-
-                  <button type="submit" class="btn btn-primary my-2">
-                    <i class="bi bi-cloud-upload-fill"></i>
-                    <span class="mx-2">Subir</span>
-                  </button>
+    
+                      <button type="submit" class="btn btn-primary my-2">
+                        <i class="bi bi-cloud-upload-fill"></i>
+                        <span class="mx-2">Enviar documento</span>
+                      </button>
+                    </div>
+                  </form>
                 </div>
-              </form>
                 <div class="row">
                   <div class="col-12">
-                    <label class="form-label">Documentos a aprender:</label>
+                    <label class="form-label">Documentos enviados:</label>
                     <div class="input-group my-2">
                       <input id="pending_docs" type="number" class="form-control" value="0" name="pending_docs" readonly/>
                       <button onclick="train()" class="btn btn-success">
@@ -93,7 +90,7 @@
                     </div>
                   </div>
                   <div class="col-12">
-                    <label class="form-label">Documentos a olvidar:</label>
+                    <label class="form-label">Documentos aprendidos:</label>
                     <div class="input-group my-2">
                       <input id="learned_docs" type="number" class="form-control" value="0" name="learned_docs" readonly/>
                       <button onclick="reset()" class="btn btn-danger">
@@ -103,12 +100,13 @@
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>    
-    </section>
-  </div>
+        </div>    
+      </section>
+    </div>
+  </main>
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header">
