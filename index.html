@@ -55,6 +55,18 @@
                 <div class="row mb-4">
                   <form onsubmit="return uploadDocument(event)">
                     <div class="form-group">
+                      
+                      <div class="row mb-3">
+                        <label class="form-label">Modo de entrenamiento:</label>
+                        <div class="col">
+                          <input type="radio" class="btn-check" name="training_mode" id="embedding_option" autocomplete="off" checked>
+                          <label class="btn btn-outline-primary" for="embedding_option">Embeddings</label>
+    
+                          <input type="radio" class="btn-check" name="training_mode" id="fine_tuning_option" autocomplete="off" disabled>
+                          <label class="btn btn-outline-primary" for="fine_tuning_option">Fine-Tuning</label>
+                        </div>
+                      </div>
+
                       <label for="new_knowledgment" class="form-label">Escribe un documento para aprender:</label>
                       <textarea class="form-control" name="new_knowledgment" rows="5"></textarea>
                       
@@ -83,7 +95,7 @@
                     <label class="form-label">Documentos enviados:</label>
                     <div class="input-group my-2">
                       <input id="pending_docs" type="number" class="form-control" value="0" name="pending_docs" readonly/>
-                      <button onclick="train()" class="btn btn-success">
+                      <button onclick="return train(event)" class="btn btn-success">
                         <i class="bi bi-node-plus-fill"></i>
                         <span class="mx-2">Entrenar</span>
                       </button>
@@ -93,7 +105,7 @@
                     <label class="form-label">Documentos aprendidos:</label>
                     <div class="input-group my-2">
                       <input id="learned_docs" type="number" class="form-control" value="0" name="learned_docs" readonly/>
-                      <button onclick="reset()" class="btn btn-danger">
+                      <button onclick="return reset(event)" class="btn btn-danger">
                         <i class="bi bi-node-minus-fill"></i>
                         <span class="mx-2">Olvidar</span>
                       </button>

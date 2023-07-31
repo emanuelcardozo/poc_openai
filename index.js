@@ -24,16 +24,36 @@ function cleanMetadatFields() {
   addEmptyRow()
 }
 
+function startLoadingButton(buttonElement) {
+  const iconElement = buttonElement.getElementsByTagName('i')[0]
+  iconElement.classList.add('visually-hidden')
+  
+  buttonElement.insertAdjacentHTML('afterbegin', `<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>`)
+  buttonElement.disabled = true
+}
+
+function finishLoadingButton(buttonElement) {
+  const iconElement = buttonElement.getElementsByTagName('i')[0]
+  iconElement.classList.remove('visually-hidden')
+  
+  const spinnerElement = buttonElement.getElementsByClassName('spinner-border')[0]
+  spinnerElement.remove()
+
+  buttonElement.disabled = false
+}
+
 function uploadDocument(e) {
   e.preventDefault()
   const formElements = e.target.elements
+  const button = document.activeElement
   const metadata = getMetadata(formElements)
   const trainTextElement = formElements.new_knowledgment
   const trainText = trainTextElement.value
 
   if(!trainText) return
 
-  trainTextElement.disabled = true  
+  trainTextElement.disabled = true
+  startLoadingButton(button)
 
   return fetch(API_URL + '/documents', {
     method: 'POST',
@@ -61,10 +81,16 @@ function uploadDocument(e) {
   .catch(console.error)
   .finally(() => {
     trainTextElement.disabled = false
+    finishLoadingButton(button)
   })
 }
 
-function train() {
+function train(event) {
+  event.preventDefault()
+
+  const button = event.currentTarget
+  startLoadingButton(button)
+
   fetch(API_URL + '/train', {
     method: 'POST',
   })
@@ -82,10 +108,16 @@ function train() {
       message: 'Puedes consultar sobre los documentos aprendidos.'
     })
   })
-  .catch(console.error)
+  .catch(console.warn)
+  .finally(() => finishLoadingButton(button))
 }
 
-function reset() {
+function reset(event) {
+  event.preventDefault()
+
+  const button = event.currentTarget
+  startLoadingButton(button)
+
   fetch(API_URL + '/train', {
     method: 'DELETE',
   })
@@ -101,6 +133,7 @@ function reset() {
     })
   })
   .catch(showErrorAlert)
+  .finally(() => finishLoadingButton(button))
 }
 
 function sendPromptToAPI(prompt) {
@@ -147,10 +180,13 @@ function cleanTextArea() {
 function sendPrompt(e) {
   e.preventDefault()
 
-  const promptInput = event.target.elements.prompt
+  const promptInput = e.target.elements.prompt
   const prompt = promptInput.value
-
+  
   if(!prompt) return
+  
+  const button = e.currentTarget.getElementsByTagName("button")[0]
+  startLoadingButton(button)
 
   const textArea = document.getElementById('chat')
   textArea.append(">> User:\n" + prompt + "\n")
@@ -169,6 +205,7 @@ function sendPrompt(e) {
     .finally(() => {
       promptInput.disabled = false
       promptInput.focus()
+      finishLoadingButton(button)
     })
 }
 
