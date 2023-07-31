@@ -56,21 +56,23 @@
                   <label for="new_knowledgment" class="form-label">Escribe un documento para aprender:</label>
                   <textarea class="form-control" name="new_knowledgment" rows="5"></textarea>
                   
-                  <div id="metadata_container">
+                  <div class="row">
                     <label class="form-label">Metadata:</label>
-                    <div class="row my-1">
-                      <div class="col-5">
-                        <input class="form-control" placeholder="Nombre" name="metadata_keys[]" onkeyup="return onMetadataChange(event)" />
+                    <div id="metadata_container">
+                      <div class="row my-1">
+                        <div class="col-5">
+                          <input class="form-control" placeholder="Nombre" name="metadata_keys[]" onkeyup="return onMetadataChange(event)" />
+                        </div>
+                        <div class="col-5">
+                          <input class="form-control" placeholder="Valor" name="metadata_values[]" onkeyup="return onMetadataChange(event)" />
+                        </div>
+                        <div class="col-2">
+                          <button class="btn btn-primary" onclick="return onClickAdd(event)" disabled>
+                            <i class="bi bi-plus"></i>
+                          </button>
+                        </div>
                       </div>
-                      <div class="col-5">
-                        <input class="form-control" placeholder="Valor" name="metadata_values[]" onkeyup="return onMetadataChange(event)" />
-                      </div>
-                      <div class="col-2">
-                        <button class="btn btn-primary" onclick="return onClickAdd(event)" disabled>
-                          <i class="bi bi-plus"></i>
-                        </button>
-                      </div>
-                    </div>
+                    </div>                    
                   </div>
 
                   <button type="submit" class="btn btn-primary my-2">

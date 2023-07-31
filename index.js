@@ -7,24 +7,33 @@ function getMetadata(formElements) {
   const valuesElements = Array.from(formElements["metadata_values[]"])
 
   keysElements.forEach((keyEl, index) => {
-    if(keyEl.value && valuesElements[index].value)
-      metadata[keyEl.value] = valuesElements[index].value
+    const key = keyEl.value.trim()
+    const value = valuesElements[index].value.trim()
+
+    if(key && value)
+      metadata[key] = value
   })
 
   return metadata
+}
+
+function cleanMetadatFields() {
+  const metadataContainerElement = document.getElementById("metadata_container")
+  metadataContainerElement.innerHTML = ''
+
+  addEmptyRow()
 }
 
 function uploadDocument(e) {
   e.preventDefault()
   const formElements = e.target.elements
   const metadata = getMetadata(formElements)
-  const trainTextElement = event.target.elements.new_knowledgment
+  const trainTextElement = formElements.new_knowledgment
   const trainText = trainTextElement.value
 
   if(!trainText) return
 
-  trainTextElement.disabled = true
-  trainTextElement.value = ''
+  trainTextElement.disabled = true  
 
   return fetch(API_URL + '/documents', {
     method: 'POST',
@@ -40,6 +49,8 @@ function uploadDocument(e) {
   .then(() => {   
     const pendingsDocsElement = document.getElementById("pending_docs")
     pendingsDocsElement.value = Number(pendingsDocsElement.value) + 1 
+    trainTextElement.value = ''
+    cleanMetadatFields()
 
     showAlert({ 
       type: 'alert-primary',
@@ -177,7 +188,7 @@ function changeToRemoveButton(buttonElement) {
   buttonElement.setAttribute("onclick", "return onClickRemove(event)")
 }
 
-function addRow() {
+function addEmptyRow() {
   const metadataContainerElement = document.getElementById("metadata_container")
 
   metadataContainerElement.insertAdjacentHTML('beforeend', `
@@ -202,7 +213,7 @@ function onClickAdd(event) {
 
   const buttonElement = event.currentTarget
   changeToRemoveButton(buttonElement)
-  addRow()
+  addEmptyRow()
 }
 
 function onMetadataChange(event) {
@@ -210,7 +221,7 @@ function onMetadataChange(event) {
   const buttonEl = rowElement.getElementsByTagName('button')[0]
   const [nameInputEl, valueInputEl] = rowElement.getElementsByTagName('input')
 
-  if(!nameInputEl.value || !valueInputEl.value) {
+  if(!nameInputEl.value.trim() || !valueInputEl.value.trim()) {
     buttonEl.disabled = true
     return
   }
