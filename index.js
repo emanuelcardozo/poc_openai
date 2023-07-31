@@ -1,9 +1,23 @@
 const API_URL = 'http://192.168.0.16:5001'
 const DEFAULT_DELAY = 5_000
 
+function getMetadata(formElements) {
+  const metadata = {}
+  const keysElements = Array.from(formElements["metadata_keys[]"])
+  const valuesElements = Array.from(formElements["metadata_values[]"])
+
+  keysElements.forEach((keyEl, index) => {
+    if(keyEl.value && valuesElements[index].value)
+      metadata[keyEl.value] = valuesElements[index].value
+  })
+
+  return metadata
+}
+
 function uploadDocument(e) {
   e.preventDefault()
-
+  const formElements = e.target.elements
+  const metadata = getMetadata(formElements)
   const trainTextElement = event.target.elements.new_knowledgment
   const trainText = trainTextElement.value
 
@@ -17,7 +31,10 @@ function uploadDocument(e) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ text: trainText })
+    body: JSON.stringify({ 
+      text: trainText,
+      metadata
+    })
   })
   .then(res => res.json())
   .then(() => {   
@@ -144,4 +161,59 @@ function sendPrompt(e) {
       promptInput.disabled = false
       promptInput.focus()
     })
+}
+
+function onClickRemove(event) {
+  const buttonElement = event.currentTarget
+  const rowElement = buttonElement.parentElement.parentElement
+
+  rowElement.remove()
+}
+
+function changeToRemoveButton(buttonElement) {
+  buttonElement.classList.remove('btn-primary')
+  buttonElement.classList.add('btn-danger')
+  buttonElement.innerHTML = `<i class="bi bi-dash"></i>`
+  buttonElement.setAttribute("onclick", "return onClickRemove(event)")
+}
+
+function addRow() {
+  const metadataContainerElement = document.getElementById("metadata_container")
+
+  metadataContainerElement.insertAdjacentHTML('beforeend', `
+  <div class="row my-1">
+    <div class="col-5">
+      <input class="form-control" placeholder="Nombre" name="metadata_keys[]" onkeyup="return onMetadataChange(event)" />
+    </div>
+    <div class="col-5">
+      <input class="form-control" placeholder="Valor" name="metadata_values[]" onkeyup="return onMetadataChange(event)" />
+    </div>
+    <div class="col-2">
+      <button role="button" class="btn btn-primary" onclick="return onClickAdd(event)" disabled>
+        <i class="bi bi-plus"></i>
+      </button>
+    </div>
+  </div>
+  `)
+}
+
+function onClickAdd(event) {
+  event.preventDefault()
+
+  const buttonElement = event.currentTarget
+  changeToRemoveButton(buttonElement)
+  addRow()
+}
+
+function onMetadataChange(event) {
+  const rowElement = event.target.parentElement.parentElement
+  const buttonEl = rowElement.getElementsByTagName('button')[0]
+  const [nameInputEl, valueInputEl] = rowElement.getElementsByTagName('input')
+
+  if(!nameInputEl.value || !valueInputEl.value) {
+    buttonEl.disabled = true
+    return
+  }
+
+  buttonEl.disabled = false
 }
