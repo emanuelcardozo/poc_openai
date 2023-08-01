@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   <script src="./index.js"></script>
 </head>
-<body>
+<body class="vh-100">
   <header>
     <nav class="navbar bg-primary border-bottom border-body" data-bs-theme="dark">
       <div class="container">
@@ -22,8 +22,8 @@
       </div>
     </nav>
   </header>
-  <main class="container">
-    <div class="row my-3">
+  <main class="container py-3">
+    <div class="row">
       <h2>Chat</h2>
       <section class="col-lg-8 mb-3">
         <div class="form-group">
@@ -53,20 +53,19 @@
             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
               <div class="accordion-body">
                 <div class="row mb-4">
+                  <div class="row mb-3">
+                    <label class="form-label">Modo de entrenamiento:</label>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="training_mode" id="embedding_option" value="embeddings" onchange="return changeTrainingMode(event)" checked>
+                      <label class="btn btn-outline-primary" for="embedding_option">Embeddings</label>
+
+                      <input type="radio" class="btn-check" name="training_mode" id="fine_tuning_option" value="fine-tuning" onchange="return changeTrainingMode(event)">
+                      <label class="btn btn-outline-primary" for="fine_tuning_option">Fine-Tuning</label>
+                    </div>
+                  </div>
+
                   <form onsubmit="return uploadDocument(event)">
                     <div class="form-group">
-                      
-                      <div class="row mb-3">
-                        <label class="form-label">Modo de entrenamiento:</label>
-                        <div class="col">
-                          <input type="radio" class="btn-check" name="training_mode" id="embedding_option" autocomplete="off" checked>
-                          <label class="btn btn-outline-primary" for="embedding_option">Embeddings</label>
-    
-                          <input type="radio" class="btn-check" name="training_mode" id="fine_tuning_option" autocomplete="off" disabled>
-                          <label class="btn btn-outline-primary" for="fine_tuning_option">Fine-Tuning</label>
-                        </div>
-                      </div>
-
                       <label for="new_knowledgment" class="form-label">Escribe un documento para aprender:</label>
                       <textarea class="form-control" name="new_knowledgment" rows="5"></textarea>
                       

@@ -1,5 +1,10 @@
 const API_URL = 'http://192.168.0.16:5001'
 const DEFAULT_DELAY = 5_000
+let trainingMode = "embeddings"
+
+function changeTrainingMode(event) {
+  trainingMode = event.target.value
+}
 
 function getMetadata(formElements) {
   const metadata = {}
@@ -55,6 +60,7 @@ function uploadDocument(e) {
   trainTextElement.disabled = true
   startLoadingButton(button)
 
+  // return fetch(`${API_URL}/${trainingMode}/documents`, {
   return fetch(API_URL + '/documents', {
     method: 'POST',
     headers: {
@@ -91,6 +97,7 @@ function train(event) {
   const button = event.currentTarget
   startLoadingButton(button)
 
+  // return fetch(`${API_URL}/${trainingMode}/train`, {
   fetch(API_URL + '/train', {
     method: 'POST',
   })
@@ -118,6 +125,7 @@ function reset(event) {
   const button = event.currentTarget
   startLoadingButton(button)
 
+  // return fetch(`${API_URL}/${trainingMode}/train`, {
   fetch(API_URL + '/train', {
     method: 'DELETE',
   })
@@ -137,6 +145,7 @@ function reset(event) {
 }
 
 function sendPromptToAPI(prompt) {
+  // return fetch(`${API_URL}/${trainingMode}/completions`, {
   return fetch(API_URL + '/completions', {
     method: 'POST',
     headers: {
