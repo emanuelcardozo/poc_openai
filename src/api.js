@@ -1,4 +1,4 @@
-const API_URL = 'http://192.168.0.16:5001'
+const API_URL = 'http://10.1.1.120:5001'
 
 function uploadDocumentToAPI({ trainingMode, text, metadata }) {
   // return fetch(`${API_URL}/${trainingMode}/documents`, {

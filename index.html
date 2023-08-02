@@ -44,28 +44,41 @@
         </div>
       </section>
       <section class="col-lg-4">
-        <div class="accordion with_shadow" id="accordionExample">
+        <h3>Entrena a la IA</h3>
+        <div class="accordion with_shadow" id="accordion">
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                <i class="bi bi-sliders"></i>
-                <span class="mx-3">Ajustes de Conocimiento</span>
+            <h2 class="accordion-header" id="headingChooseTrainMode">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#chooseTrainMode" aria-expanded="true" aria-controls="chooseTrainMode">
+                <i class="bi bi-badge-tm"></i>
+                <span class="mx-3">Elige un Training Mode</span>
+                
               </button>
             </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div id="chooseTrainMode" class="accordion-collapse collapse show" aria-labelledby="headingChooseTrainMode" data-bs-parent="#accordion">
+              <div class="accordion-body">
+                <div class="row mb-3">
+                  <label class="form-label">Modo de entrenamiento:</label>
+                  <div class="col">
+                    <input type="radio" class="btn-check" name="training_mode" id="embedding_option" value="embeddings" onchange="return changeTrainingMode(event)" checked>
+                    <label class="btn btn-outline-primary" for="embedding_option">Embeddings</label>
+
+                    <input type="radio" class="btn-check" name="training_mode" id="fine_tuning_option" value="fine-tuning" onchange="return changeTrainingMode(event)">
+                    <label class="btn btn-outline-primary" for="fine_tuning_option">Fine-Tuning</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingAddDocuments">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#addDocuments" aria-expanded="false" aria-controls="addDocuments">
+                <i class="bi bi-cloud-plus"></i>
+                <span class="mx-3">Agrega conocimiento</span>
+              </button>
+            </h2>
+            <div id="addDocuments" class="accordion-collapse collapse" aria-labelledby="headingAddDocuments" data-bs-parent="#accordion">
               <div class="accordion-body">
                 <div class="row mb-4">
-                  <div class="row mb-3">
-                    <label class="form-label">Modo de entrenamiento:</label>
-                    <div class="col">
-                      <input type="radio" class="btn-check" name="training_mode" id="embedding_option" value="embeddings" onchange="return changeTrainingMode(event)" checked>
-                      <label class="btn btn-outline-primary" for="embedding_option">Embeddings</label>
-
-                      <input type="radio" class="btn-check" name="training_mode" id="fine_tuning_option" value="fine-tuning" onchange="return changeTrainingMode(event)">
-                      <label class="btn btn-outline-primary" for="fine_tuning_option">Fine-Tuning</label>
-                    </div>
-                  </div>
-
                   <form onsubmit="return uploadDocument(event)">
                     <div class="form-group">
                       <label for="new_knowledgment" class="form-label">Escribe un documento para aprender:</label>
@@ -91,26 +104,49 @@
                     </div>
                   </form>
                 </div>
-                <div class="row">
-                  <div class="col-12">
-                    <label class="form-label">Documentos enviados:</label>
-                    <div class="input-group my-2">
-                      <input id="pending_docs" type="number" class="form-control" value="0" name="pending_docs" readonly/>
-                      <button onclick="return train(event)" class="btn btn-success">
-                        <i class="bi bi-node-plus-fill"></i>
-                        <span class="mx-2">Entrenar</span>
-                      </button>
-                    </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTrain">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#trainAccordion" aria-expanded="false" aria-controls="trainAccordion">
+                <i class="bi bi-arrow-clockwise"></i>
+                <span class="mx-3">Entrena conocimiento</span>
+                
+              </button>
+            </h2>
+            <div id="trainAccordion" class="accordion-collapse collapse" aria-labelledby="headingTrain" data-bs-parent="#accordion">
+              <div class="accordion-body">
+                <div class="col-12">
+                  <label class="form-label">Documentos enviados:</label>
+                  <div class="input-group my-2">
+                    <input id="pending_docs" type="number" class="form-control" value="0" name="pending_docs" readonly/>
+                    <button onclick="return train(event)" class="btn btn-success">
+                      <i class="bi bi-node-plus-fill"></i>
+                      <span class="mx-2">Entrenar</span>
+                    </button>
                   </div>
-                  <div class="col-12">
-                    <label class="form-label">Documentos aprendidos:</label>
-                    <div class="input-group my-2">
-                      <input id="learned_docs" type="number" class="form-control" value="0" name="learned_docs" readonly/>
-                      <button onclick="return reset(event)" class="btn btn-danger">
-                        <i class="bi bi-node-minus-fill"></i>
-                        <span class="mx-2">Olvidar</span>
-                      </button>
-                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingDeleteKnowledgement">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#deleteKnowledgement" aria-expanded="false" aria-controls="deleteKnowledgement">
+                <i class="bi bi-dash-circle"></i>
+                <span class="mx-3">Elimina conocimiento</span>
+              </button>
+            </h2>
+            <div id="deleteKnowledgement" class="accordion-collapse collapse" aria-labelledby="headingDeleteKnowledgement" data-bs-parent="#accordion">
+              <div class="accordion-body">
+                <div class="col-12">
+                  <label class="form-label">Documentos aprendidos:</label>
+                  <div class="input-group my-2">
+                    <input id="learned_docs" type="number" class="form-control" value="0" name="learned_docs" readonly/>
+                    <button onclick="return reset(event)" class="btn btn-danger">
+                      <i class="bi bi-node-minus-fill"></i>
+                      <span class="mx-2">Olvidar</span>
+                    </button>
                   </div>
                 </div>
               </div>
