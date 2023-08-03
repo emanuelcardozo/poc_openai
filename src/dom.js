@@ -2,14 +2,19 @@ function changeTrainingMode(event) {
   trainingMode = event.target.value
   const embeddingSections = Array.from(document.getElementsByClassName("embedding_section"))
   const fineTuningSections = Array.from(document.getElementsByClassName("fine-tuning_section"))
+  let newSearchParamms
   
-  if(trainingMode === "embedding") {
+  if(trainingMode === TRAINING_MODE.EMBEDDING) {
     embeddingSections.forEach((el) => el.classList.remove('d-none'))
     fineTuningSections.forEach((el) => el.classList.add('d-none'))
+    newSearchParamms = "?t=" + TRAINING_MODE.EMBEDDING
   } else {
     embeddingSections.forEach((el) => el.classList.add('d-none'))
     fineTuningSections.forEach((el) => el.classList.remove('d-none'))
+    newSearchParamms = "?t=" + TRAINING_MODE.FINE_TUNING
   }
+
+  history.pushState(null, null, newSearchParamms);
 }
 
 function getMetadata(formElements) {

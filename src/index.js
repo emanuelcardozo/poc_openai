@@ -1,4 +1,17 @@
-let trainingMode = "embedding"
+let trainingMode
+
+document.addEventListener("DOMContentLoaded", function() {
+  const searchParams = new URLSearchParams(location.search)
+  const tMode = searchParams.get('t') === TRAINING_MODE.FINE_TUNING ? TRAINING_MODE.FINE_TUNING : TRAINING_MODE.EMBEDDING
+
+  changeTrainingMode({ target: { value: tMode }})
+
+  if(tMode === TRAINING_MODE.FINE_TUNING) {
+    document.getElementById("fine_tuning_option").checked = true
+  } else {
+    document.getElementById("embedding_option").checked = true
+  }
+})
 
 function uploadDocument(e) {
   e.preventDefault()
