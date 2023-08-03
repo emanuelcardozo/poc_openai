@@ -59,8 +59,8 @@
                 <div class="row mb-3">
                   <label class="form-label">Modo de entrenamiento:</label>
                   <div class="col">
-                    <input type="radio" class="btn-check" name="training_mode" id="embedding_option" value="embeddings" onchange="return changeTrainingMode(event)" checked>
-                    <label class="btn btn-outline-primary" for="embedding_option">Embeddings</label>
+                    <input type="radio" class="btn-check" name="training_mode" id="embedding_option" value="embedding" onchange="return changeTrainingMode(event)" checked>
+                    <label class="btn btn-outline-primary" for="embedding_option">Embedding</label>
 
                     <input type="radio" class="btn-check" name="training_mode" id="fine_tuning_option" value="fine-tuning" onchange="return changeTrainingMode(event)">
                     <label class="btn btn-outline-primary" for="fine_tuning_option">Fine-Tuning</label>
@@ -84,7 +84,7 @@
                       <label for="new_knowledgment" class="form-label">Escribe un documento para aprender:</label>
                       <textarea class="form-control" name="new_knowledgment" rows="5"></textarea>
                       
-                      <div class="row my-2">
+                      <div class="row my-2 embedding_section">
                         <label class="form-label">Metadata (opcional):</label>
                         <div id="metadata_container">
                           <div class="input-group my-2">

@@ -1,5 +1,15 @@
 function changeTrainingMode(event) {
   trainingMode = event.target.value
+  const embeddingSections = Array.from(document.getElementsByClassName("embedding_section"))
+  const fineTuningSections = Array.from(document.getElementsByClassName("fine-tuning_section"))
+  
+  if(trainingMode === "embedding") {
+    embeddingSections.forEach((el) => el.classList.remove('d-none'))
+    fineTuningSections.forEach((el) => el.classList.add('d-none'))
+  } else {
+    embeddingSections.forEach((el) => el.classList.add('d-none'))
+    fineTuningSections.forEach((el) => el.classList.remove('d-none'))
+  }
 }
 
 function getMetadata(formElements) {

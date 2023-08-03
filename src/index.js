@@ -1,4 +1,4 @@
-let trainingMode = "embeddings"
+let trainingMode = "embedding"
 
 function uploadDocument(e) {
   e.preventDefault()
