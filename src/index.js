@@ -17,7 +17,6 @@ function uploadDocument(e) {
   e.preventDefault()
   const formElements = e.target.elements
   const button = document.activeElement
-  const metadata = getMetadata(formElements)
   const trainTextElement = formElements.new_knowledgment
   const trainText = trainTextElement.value
 
@@ -26,12 +25,25 @@ function uploadDocument(e) {
   trainTextElement.disabled = true
   startLoadingButton(button)
 
-  uploadDocumentToAPI({ trainingMode, text: trainText, metadata })
-  .then(() => {   
-    const pendingsDocsElement = document.getElementById("pending_docs")
-    pendingsDocsElement.value = Number(pendingsDocsElement.value) + 1 
+  let requestPromise
+
+  if(trainingMode === TRAINING_MODE.EMBEDDING) {
+    const metadata = getMetadata(formElements)
+    requestPromise = uploadEmbeddingDocumentToAPI({ text: trainText, metadata })
+      
+  } else {
+    requestPromise = uploadFineTuningDocumentToAPI({ text: trainText })
+  }
+
+  requestPromise
+  .then(() => {
+    if(trainingMode === TRAINING_MODE.EMBEDDING) {
+      const pendingsDocsElement = document.getElementById("pending_docs")
+      pendingsDocsElement.value = Number(pendingsDocsElement.value) + 1 
+      cleanMetadatFields()
+    }
+    
     trainTextElement.value = ''
-    cleanMetadatFields()
 
     showAlert({ 
       type: 'success',
@@ -39,7 +51,7 @@ function uploadDocument(e) {
       message: 'El documento se encuentra disponible para aprender.'
     })
   })
-  .catch(console.error)
+  .catch(showErrorAlert)
   .finally(() => {
     trainTextElement.disabled = false
     finishLoadingButton(button)
@@ -110,7 +122,9 @@ function sendPrompt(event) {
   promptInput.disabled = true
 
   sendPromptToAPI({ trainingMode, prompt })
-    .then(({ data }) => {
+    .then((res) => {
+      const data = trainingMode === TRAINING_MODE.EMBEDDING ? res.data : `\n${res.choices[0].text}`
+
       textArea.append("<< IA:" + data + "\n")
       textArea.scrollTop = textArea.scrollHeight
     })
