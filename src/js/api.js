@@ -1,4 +1,4 @@
-const API_URL = 'https://poc-ia.digbang.com/api/'
+const API_URL = 'https://poc-ia.digbang.com/api'
 
 function uploadEmbeddingDocumentToAPI({ text, metadata }) {
   return fetch(`${API_URL}/embedding/documents`, {
