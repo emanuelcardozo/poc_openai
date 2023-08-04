@@ -1,4 +1,4 @@
-const API_URL = 'https://b0e1-152-171-172-219.ngrok-free.app/api'
+const API_URL = 'https://poc-ia.digbang.com/api/'
 
 function uploadEmbeddingDocumentToAPI({ text, metadata }) {
   return fetch(`${API_URL}/embedding/documents`, {
